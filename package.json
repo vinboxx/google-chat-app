@@ -16,5 +16,10 @@
     "electron-builder": "22.10.5",
     "electron-webpack": "2.8.2",
     "webpack": "4.42.1"
+  },
+  "build": {
+    "mac": {
+      "icon": "assets/icon.png"
+    }
   }
 }

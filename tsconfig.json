@@ -1,23 +1,3 @@
 {
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "declaration": false,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "newLine": "lf",
-    "noEmitOnError": true,
-    "pretty": true,
-    "skipLibCheck": true,
-    "sourceMap": false,
-    "strict": true,
-    "target": "esnext",
-    "typeRoots": [
-      "node_modules/@types"
-    ]
-  },
-  "include": [
-    "./src/**/*"
-  ]
+  "extends": "./node_modules/electron-webpack/tsconfig-base.json"
 }

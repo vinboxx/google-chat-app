@@ -1,13 +1,11 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
-import * as path from 'path'
-import { format as formatUrl } from 'url'
+import { app, BrowserWindow, webContents } from 'electron'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
-let mainWindow
+let mainWindow: BrowserWindow | null
 
 function createMainWindow() {
   const window = new BrowserWindow({webPreferences: {nodeIntegration: true}})
@@ -50,4 +48,13 @@ app.on('activate', () => {
 // create main BrowserWindow when electron is ready
 app.on('ready', () => {
   mainWindow = createMainWindow()
+
+  const wc = webContents.getAllWebContents()[0]
+  wc?.on('page-favicon-updated', (event: Event, favicons: string[]) => {
+    if (favicons.some(fv => fv.includes('chat-favicon-new-notif'))) {
+      app.setBadgeCount(1);
+    } else {
+      app.setBadgeCount(0);
+    }
+  });
 })

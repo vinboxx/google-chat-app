@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow, webContents } from 'electron'
+import { app, BrowserWindow, shell } from 'electron'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -49,8 +49,12 @@ app.on('activate', () => {
 app.on('ready', () => {
   mainWindow = createMainWindow()
 
-  const wc = webContents.getAllWebContents()[0]
-  wc?.on('page-favicon-updated', (event: Event, favicons: string[]) => {
+  mainWindow.webContents.on('new-window', function (event, url) {
+    event.preventDefault();
+    shell.openExternal(url);
+  });
+
+  mainWindow.webContents.on('page-favicon-updated', (event: Event, favicons: string[]) => {
     if (favicons.some(fv => fv.includes('chat-favicon-new-notif'))) {
       app.setBadgeCount(1);
     } else {

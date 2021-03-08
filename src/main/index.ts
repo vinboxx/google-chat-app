@@ -51,7 +51,11 @@ app.on('ready', () => {
 
   mainWindow.webContents.on('new-window', function (event, url) {
     event.preventDefault();
-    shell.openExternal(url);
+    if (url.startsWith('https://chat.google.com')) {
+      mainWindow?.webContents.loadURL(url);
+    } else {
+      shell.openExternal(url);
+    }
   });
 
   mainWindow.webContents.on('page-favicon-updated', (event: Event, favicons: string[]) => {
